@@ -1,3 +1,4 @@
+import { SalasEntity } from "src/salas/salas.entity";
 import { UsuarioEntity } from "src/usuarios/usuarios.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -6,9 +7,9 @@ export class ConviteSalaEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => UsuarioEntity, { eager: true }) // Muitas solicitações pertencem a um usuário remetente
+    @ManyToOne(() => SalasEntity, { eager: true }) // Muitas solicitações pertencem a um usuário remetente
     @JoinColumn({ name: 'sender_id' })
-    sender?: UsuarioEntity;
+    sender?: SalasEntity;
 
     @ManyToOne(() => UsuarioEntity, { eager: true }) // Muitas solicitações são enviadas para um usuário destinatário
     @JoinColumn({ name: 'recipient_id' })

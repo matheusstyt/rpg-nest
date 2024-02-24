@@ -1,10 +1,10 @@
 import { UsuarioEntity } from "src/usuarios/usuarios.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("notificacoes_parceria")
-export class NotificacaoParceriaEntity {
+@Entity("convite_parceria")
+export class ConviteParceriaEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id?: string;
 
     @ManyToOne(() => UsuarioEntity, { eager: true }) // Muitas solicitações pertencem a um usuário remetente
     @JoinColumn({ name: 'sender_id' })

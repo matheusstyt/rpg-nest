@@ -30,7 +30,7 @@ export class UsuarioController {
     @Public()
     @Get(":id")
     async getUsuario(@Param("id") id: string){
-        const usuarioEncontrado = await this.usuarioServices.findInfo(id);
+        const usuarioEncontrado = await this.usuarioServices.findOne(id);
 
         if(!usuarioEncontrado) throw new NotFoundException("Usuário não encontrado.");
         

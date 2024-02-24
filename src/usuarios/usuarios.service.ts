@@ -74,7 +74,7 @@ export class UsuarioService {
         });
         return usuarios;
     }
-    async update(id: string, data: UpdateUsuarioDTO) {
+    async update(id: string, data: UsuarioEntity) {
         return await this.usuarioRepository.update(id, data);
     }
     async delete(id: string) {
