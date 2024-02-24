@@ -1,13 +1,18 @@
+import { SalasModule } from './salas/salas.module';
+
+import { NotificacoesModule } from './notificacoes/notificacoes.module';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfigService } from 'config/postgres.config.services';
 import { UsuarioModule } from './usuarios/usuarios.module';
-import { ChatGateway } from 'webpack/chat/chat.gateway';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    SalasModule,
+    NotificacoesModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
@@ -16,9 +21,6 @@ import { AuthModule } from './auth/auth.module';
     }),
     AuthModule,
     UsuarioModule,
-    ChatGateway
   ],
-  controllers: [],
-  providers: [],
 })
-export class AppModule {}
+export class AppModule { }

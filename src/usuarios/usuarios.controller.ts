@@ -27,7 +27,7 @@ export class UsuarioController {
 
         return { status: "Cadastrado com sucesso!", data }
     }
-    
+    @Public()
     @Get(":id")
     async getUsuario(@Param("id") id: string){
         const usuarioEncontrado = await this.usuarioServices.findInfo(id);

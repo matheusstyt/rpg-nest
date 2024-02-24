@@ -15,7 +15,36 @@ export class UsuarioService {
         await this.usuarioRepository.save(usuario);
     }
     async findOne(id: string) {
-        return await this.usuarioRepository.findOne({where: {id}});
+        return await this.usuarioRepository.findOne(
+            {
+                where: {id},
+                relations: ["parcerias", "salas", "salas.criador", "created_rooms"],
+                select: {
+                    id: true,
+                    first_name: true,
+                    last_name: true,
+                    email: true,
+                    username: true,
+                    parcerias: {
+                        id: true,
+                        first_name: true,
+                        last_name: true,
+                        username: true,
+                    },
+                    salas: {
+                        id: true,
+                        is_aberto: true,
+                        tempo_ativo: true,
+                        titulo: true,
+                        criador: {
+                            id: true,
+                            first_name: true,
+                            username: true,
+                        }
+                    },
+                    created_rooms: true
+                }
+            });
     }
     async findUsername(username: string): Promise<UsuarioEntity | undefined>{
         return await this.usuarioRepository.findOne({where: {username}});
