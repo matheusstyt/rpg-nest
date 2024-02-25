@@ -6,11 +6,13 @@ import { ConviteParceriaEntity } from './conviteParceria.entity';
 import { v4 as uuid } from "uuid";
 import { UsuarioEntity } from 'src/usuarios/usuarios.entity';
 import { UsuarioService } from 'src/usuarios/usuarios.service';
+import { ConviteParceriaGateway } from './conviteparceria.gateway';
 
 @Controller("conviteParceria")
 export class ConviteParceriaController {
     constructor ( 
         private conviteParceriaService: ConviteParceriaService,
+        private conviteParceriaGateway: ConviteParceriaGateway,
         private usuarioService: UsuarioService,
         ) { }
 
@@ -41,10 +43,30 @@ export class ConviteParceriaController {
         usuarioSenderExistente.parcerias.push(usuarioRecipientExistente);
         usuarioRecipientExistente.parcerias.push(usuarioSenderExistente);
 
-        await this.usuarioService.save(usuarioSenderExistente);
-        await this.usuarioService.save(usuarioRecipientExistente);
+        try {
+            // atualizar lista de parcerias no banco
+            await this.usuarioService.save(usuarioSenderExistente);
+            await this.usuarioService.save(usuarioRecipientExistente);
+    
+            await this.conviteParceriaService.deleted(conviteExistente.id);
+            // emitir mensagem para socket
+            this.conviteParceriaGateway.handleConviteAceito(usuarioSenderExistente.id);
+            this.conviteParceriaGateway.handleConviteAceito(usuarioRecipientExistente.id);
+        } catch (error) {
+            throw new ForbiddenException("Algo deu errado", error);
+        }
+    }
+    @Public()
+    @Post("recusar")
+    async recusarConvite( @Body() body: any){
+        const conviteExistente = await this.conviteParceriaService.findOne(body.id_convite);
 
-        await this.conviteParceriaService.deleted(conviteExistente.id);
+        try {
+            await this.conviteParceriaService.deleted(body.id_convite);
+
+        } catch (error) {
+            throw new ForbiddenException("Algo deu errado", error);
+        }
     }
     @Public()
     @Post()

@@ -38,19 +38,16 @@ export class ConviteParceriaService {
     //     })
     // }
     async verificaConvite (fk_sender: string, fk_recipient : string){
-        const isExists = await this.notificacaoRepository.find({
-            relations: ['recipient', 'sender'],
-            where: {
-                recipient: {
-                    id: fk_recipient
-                },
-                sender: {
-                    id : fk_sender
-                }
-            }
-        });
-        console.log(isExists)
-        if(isExists) throw new ForbiddenException("Convite já existe!")
+        console.log("chegou aqui ", fk_sender)
+        const isExists = await this.notificacaoRepository
+            .createQueryBuilder('notificacao')
+            .leftJoinAndSelect('notificacao.recipient', 'recipient')
+            .leftJoinAndSelect('notificacao.sender', 'sender')
+            .where('recipient.id = :fk_recipient', { fk_recipient })
+            .andWhere('sender.id = :fk_sender', { fk_sender })
+            .getMany();
+        console.log("isExists", isExists)
+        if(isExists.length > 0) throw new ForbiddenException("Convite já existe!")
     }
     async findOne(id:string) {
         return await this.notificacaoRepository.findOne({

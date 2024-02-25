@@ -7,6 +7,7 @@ import { Public } from "src/auth/constants";
 
 @Controller("/usuarios")
 export class UsuarioController {
+    
     constructor ( private usuarioServices: UsuarioService ) {}
 
     @Public()

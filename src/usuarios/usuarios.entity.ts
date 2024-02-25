@@ -22,6 +22,9 @@ export class UsuarioEntity {
     @Column({name: "password", length: 255, nullable: false})
     password?: string;
 
+    @Column({name: "is_online", default: false})
+    is_online?: boolean;
+
     @CreateDateColumn({name: "created_at"})
     created_at?: string;
 

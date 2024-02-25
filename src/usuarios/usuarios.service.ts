@@ -25,11 +25,13 @@ export class UsuarioService {
                     last_name: true,
                     email: true,
                     username: true,
+                    is_online: true,
                     parcerias: {
                         id: true,
                         first_name: true,
                         last_name: true,
                         username: true,
+                        is_online: true
                     },
                     salas: {
                         id: true,
