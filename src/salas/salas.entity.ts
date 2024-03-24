@@ -25,9 +25,8 @@ export class SalasEntity {
     @ManyToOne(() => UsuarioEntity, criador => criador.created_rooms)
     criador?: UsuarioEntity;
 
-    @OneToMany(() => UsuarioEntity, usuario => usuario.salas)
+    @OneToMany(() => UsuarioEntity, usuario => usuario.salas,)
     participantes?: UsuarioEntity[];
-
 }
     
     // @ManyToMany(() => UsuarioEntity)

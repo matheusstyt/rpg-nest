@@ -13,7 +13,10 @@ export class SalasService {
         await this.salaRepository.save(usuario);
     }
     async findOne(id: string) {
-        return await this.salaRepository.findOne({where: {id}});
+        return await this.salaRepository.findOne({
+            where: {id},
+            relations: ['participantes']
+        });
     }
     async listCreatedRooms(id: string) {
         const usuarios = await this.salaRepository.find({

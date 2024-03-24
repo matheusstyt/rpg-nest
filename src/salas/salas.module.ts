@@ -8,10 +8,12 @@ import { SalasEntity } from './salas.entity';
 import { SalasController } from './salas.controller';
 import { SalasService } from './salas.service';
 import { SalasGateway } from './salas.gateway';
+import { UsuarioService } from 'src/usuarios/usuarios.service';
+import { UsuarioEntity } from 'src/usuarios/usuarios.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([SalasEntity])],
+    imports: [TypeOrmModule.forFeature([SalasEntity, UsuarioEntity])],
     controllers: [SalasController],
-    providers: [SalasService, SalasGateway],
+    providers: [SalasService, UsuarioService, SalasGateway],
 })
 export class SalasModule {}
